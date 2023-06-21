@@ -1,6 +1,6 @@
 // Fetch news data from the mediastack API
 function fetchNews() {
-    const apiUrl = `https://api.mediastack.com/v1/news?access_key=3446fcfc4a9aeffcb306b71eb25be85a&sources=cnn,bbc&limit=10`;
+    const apiUrl = `http://api.mediastack.com/v1/news?access_key=bf21cadf811ae439740dabe068c305f1&sources=cnn,bbc&limit=10`;
 
     fetch(apiUrl)
         .then(response => response.json())
