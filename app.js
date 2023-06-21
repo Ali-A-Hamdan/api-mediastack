@@ -1,49 +1,48 @@
-// // Fetch news data from the mediastack API
-// function fetchNews() {
-//     const apiUrl = `http://api.mediastack.com/v1/news?access_key=bf21cadf811ae439740dabe068c305f1&sources=cnn,bbc&limit=10`;
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", function () {
+  var fetchBtn = document.getElementById("fetch-btn");
+  fetchBtn.addEventListener("click", fetchTrivia);
 
-//     fetch(apiUrl)
-//         .then(response => response.json())
-//         .then(data => displayNews(data))
-//         .catch(error => console.log(error));
-// }
+  var fetchRandomBtn = document.getElementById("fetch-random-btn");
+  fetchRandomBtn.addEventListener("click", fetchRandomTrivia);
+});
 
-// // Display news articles on the page
-// function displayNews(data) {
-//     const newsContainer = document.getElementById("news-container");
+function fetchTrivia() {
+  var numberInput = document.getElementById("number-input");
+  var triviaText = document.getElementById("trivia-text");
+  var number = numberInput.value;
 
-//     if (data && data.data && Array.isArray(data.data)) {
-//         data.data.forEach(article => {
-//             const { title, description, source, url } = article;
+  // Make the API request
+  fetch("http://numbersapi.com/" + number)
+      .then(function (response) {
+          // Parse the response as text
+          return response.text();
+      })
+      .then(function (data) {
+          // Update the trivia text with the retrieved data
+          triviaText.innerText = data;
+      })
+      .catch(function (error) {
+          // Handle any errors
+          console.log("Error fetching trivia:", error);
+      });
+}
 
-//             const newsCard = document.createElement("div");
-//             newsCard.classList.add("news-card");
+function fetchRandomTrivia() {
+  var triviaText = document.getElementById("trivia-text");
 
-//             const newsTitle = document.createElement("h2");
-//             newsTitle.textContent = title;
-
-//             const newsDescription = document.createElement("p");
-//             newsDescription.textContent = description;
-
-//             const newsSource = document.createElement("p");
-//             newsSource.textContent = `Source: ${source}`;
-
-//             const newsLink = document.createElement("a");
-//             newsLink.textContent = "Read more";
-//             newsLink.href = url;
-//             newsLink.target = "_blank";
-
-//             newsCard.appendChild(newsTitle);
-//             newsCard.appendChild(newsDescription);
-//             newsCard.appendChild(newsSource);
-//             newsCard.appendChild(newsLink);
-
-//             newsContainer.appendChild(newsCard);
-//         });
-//     } else {
-//         console.log("Invalid response data");
-//     }
-// }
-
-// // Call the fetchNews function to load news articles
-// fetchNews();
+  // Make the API request for random trivia
+  fetch("http://numbersapi.com/random/trivia")
+      .then(function (response) {
+          // Parse the response as text
+          return response.text();
+      })
+      .then(function (data) {
+          // Update the trivia text with the retrieved data
+          triviaText.innerText = data;
+      })
+      .catch(function (error) {
+          // Handle any errors
+          console.log("Error fetching random trivia:", error);
+      });
+}

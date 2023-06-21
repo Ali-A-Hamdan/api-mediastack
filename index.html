@@ -1,67 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>News Articles</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div id="news-container"></div>
+<head>
+    <title>Number Trivia</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="trivia-container">
+        <h1>Number Trivia</h1>
+        <input type="number" id="number-input" placeholder="Enter a number">
+        <button id="fetch-btn">Fetch Trivia</button>
+        <button id="fetch-random-btn">Fetch Random Trivia</button>
+        <p id="trivia-text"></p>
+    </div>
 
-    <script>
-      function fetchNews() {
-        const apiUrl = 'http://api.mediastack.com/v1/news';
-        const apiKey = 'bf21cadf811ae439740dabe068c305f1';
-        const sources = 'cnn,bbc';
-        const limit = 10;
-
-        $.ajax({
-          url: apiUrl,
-          method: 'GET',
-          data: {
-            access_key: apiKey,
-            sources: sources,
-            limit: limit,
-          },
-          success: function (data) {
-            displayNews(data);
-          },
-          error: function (error) {
-            console.log(error);
-          },
-        });
-      }
-
-      function displayNews(data) {
-        const newsContainer = $('#news-container');
-
-        if (data && data.data && Array.isArray(data.data)) {
-          data.data.forEach((article) => {
-            const { title, description, source, url } = article;
-
-            const newsCard = $('<div>').addClass('news-card');
-
-            const newsTitle = $('<h2>').text(title);
-
-            const newsDescription = $('<p>').text(description);
-
-            const newsSource = $('<p>').text(`Source: ${source}`);
-
-            const newsLink = $('<a>')
-              .text('Read more')
-              .attr('href', url)
-              .attr('target', '_blank');
-
-            newsCard.append(newsTitle, newsDescription, newsSource, newsLink);
-            newsContainer.append(newsCard);
-          });
-        } else {
-          console.log('Invalid response data');
-        }
-      }
-
-      $(document).ready(function () {
-        fetchNews();
-      });
-    </script>
-  </body>
+    <script src="app.js"></script>
+</body>
 </html>
