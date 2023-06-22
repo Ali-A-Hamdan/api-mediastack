@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Number Trivia</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <title>CurrencyFreaks API Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div id="trivia-container">
-        <h1>Number Trivia</h1>
-        <input type="number" id="number-input" placeholder="Enter a number">
-        <button id="fetch-btn">Fetch Trivia</button>
-        <button id="fetch-random-btn">Fetch Random Trivia</button>
-        <p id="trivia-text"></p>
-    </div>
+  <h1>Currency Exchange Rates</h1>
+  <div id="rates"></div>
 
-    <script src="app.js"></script>
+  <script>
+    // Replace 'YOUR_API_KEY' with your actual API key
+    const apiKey = '6d55646b007d4814b154dd246265b809';
+
+    // Fetch latest exchange rates
+    fetch(`https://api.currencyfreaks.com/latest?apikey=${apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+        const rates = data.rates;
+
+        // Display rates on the page
+        const ratesDiv = document.getElementById('rates');
+        Object.keys(rates).forEach(currency => {
+          const rate = rates[currency];
+          ratesDiv.innerHTML += `${currency}: ${rate}<br>`;
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
 </body>
 </html>
