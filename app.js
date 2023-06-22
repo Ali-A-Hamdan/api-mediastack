@@ -1,28 +1,24 @@
 const apiKey = '6d55646b007d4814b154dd246265b809';
 
 // Function to handle currency conversion
-function convertCurrency(amount) {
-    fetch(`https://api.currencyfreaks.com/latest?apikey=${apiKey}`)
-        .then((response) => response.json())
-        .then((currency) => {
-            const currencies = document.querySelectorAll('.currency');
+async function convertCurrency(amount) {
+    try {
+        const response = await fetch(`https://api.currencyfreaks.com/latest?apikey=${apiKey}`);
+        const currency = await response.json();
 
-            currencies.forEach((currencyElement) => {
-                const currencyName =
-                    currencyElement.querySelector('.currency-name').textContent;
-                const currencyPriceElement =
-                    currencyElement.querySelector('.currency-price');
+        const currencies = document.querySelectorAll('.currency');
 
-                const convertedPrice = Math.round(
-                    (amount / currency.rates['EUR']) * currency.rates[currencyName]
-                );
-                const formattedPrice = convertedPrice.toLocaleString();
-                currencyPriceElement.textContent = formattedPrice;
-            });
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+        currencies.forEach(currencyElement => {
+            const currencyName = currencyElement.querySelector('.currency-name').textContent;
+            const currencyPriceElement = currencyElement.querySelector('.currency-price');
+
+            const convertedPrice = Math.round(amount / currency.rates['EUR'] * currency.rates[currencyName]);
+            const formattedPrice = convertedPrice.toLocaleString();
+            currencyPriceElement.textContent = formattedPrice;
         });
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 // Get the amount input field
