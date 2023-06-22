@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CurrencyFreaks API Example</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Currency Conversion</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <h1>Currency Exchange Rates</h1>
-  <div id="rates"></div>
+  <h1>Currency Conversion</h1>
+  <div class="input-group">
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" class="amount">
+  </div>
+  <div class="currencies">
+    <div class="currency">
+      <span class="currency-name">EGP</span>
+      <span class="currency-price"></span>
+    </div>
+    <div class="currency">
+      <span class="currency-name">SAR</span>
+      <span class="currency-price"></span>
+    </div>
+    <!-- Add more currency elements for other currencies -->
+  </div>
 
-  <script>
-    // Replace 'YOUR_API_KEY' with your actual API key
-    const apiKey = '6d55646b007d4814b154dd246265b809';
-
-    // Fetch latest exchange rates
-    fetch(`https://api.currencyfreaks.com/latest?apikey=${apiKey}`)
-      .then(response => response.json())
-      .then(data => {
-        const rates = data.rates;
-
-        // Display rates on the page
-        const ratesDiv = document.getElementById('rates');
-        Object.keys(rates).forEach(currency => {
-          const rate = rates[currency];
-          ratesDiv.innerHTML += `${currency}: ${rate}<br>`;
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
